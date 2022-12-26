@@ -1,5 +1,6 @@
-import React, { ChangeEventHandler, useCallback, useRef } from 'react'
 import './App.css'
+
+import React, { ChangeEventHandler, useCallback, useRef } from 'react'
 
 const useSynth = () => {
   const audioCtx = useRef<AudioContext>()
@@ -75,12 +76,12 @@ const App: React.FC = () => {
 
   const handleOscillatorFrequency = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (e) => setOscillatorFrequency(+e.target.value),
-    []
+    [setOscillatorFrequency]
   )
 
   const handleFilterFrequency = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (e) => setFilterFrequency(+e.target.value),
-    []
+    [setFilterFrequency]
   )
 
   return (
