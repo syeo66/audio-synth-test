@@ -23,7 +23,7 @@ const SingleOscillator = () => {
     }
   }, [audioCtx])
 
-  return <Module>SingleOscillator</Module>
+  return <Module title="SingleOscillator"></Module>
 }
 
 export default SingleOscillator
