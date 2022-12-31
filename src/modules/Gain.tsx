@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from 'react'
 
 import { CaseContext } from '../components/Case'
+import Knob from '../components/Knob'
 import Module from '../components/Module'
 
 const Gain = () => {
@@ -20,7 +21,13 @@ const Gain = () => {
     registerModule({ moduleName: 'gain', inputs: { main: gain.current } })
   }, [audioCtx, registerModule])
 
-  return <Module title="Gain"></Module>
+  return (
+    <Module title="Gain">
+      <div>
+        <Knob label="Gain" />
+      </div>
+    </Module>
+  )
 }
 
 export default Gain

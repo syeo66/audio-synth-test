@@ -22,7 +22,6 @@ const SingleOscillator = () => {
     }
 
     oscillator.current = audioCtx.createOscillator()
-    oscillator.current.connect(audioCtx.destination)
     oscillator.current.start()
     oscillator.current.frequency.setValueAtTime(Math.random() * 100 + 100, audioCtx.currentTime)
 
@@ -92,11 +91,15 @@ const SingleOscillator = () => {
         </PushButton>
       </div>
       <div>
-        <select onChange={handleSelectOutput}>
-          {Object.entries(inputsList).map(([moduleName]) => (
-            <option key={moduleName}>{moduleName}</option>
-          ))}
-        </select>
+        <label>
+          <select onChange={handleSelectOutput}>
+            <option></option>
+            {Object.entries(inputsList).map(([moduleName]) => (
+              <option key={moduleName}>{moduleName}</option>
+            ))}
+          </select>
+          {' ->'}
+        </label>
       </div>
     </Module>
   )
