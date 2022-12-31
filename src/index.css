@@ -4,6 +4,8 @@
   --border-color: var(--text-color);
   --border-radius: 1rem;
   --module-height: 300px;
+  --inactive: #363636;
+  --active: #aa9422;
 }
 
 :root {
