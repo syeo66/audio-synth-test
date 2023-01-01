@@ -1,4 +1,4 @@
-import React, { useCallback, WheelEventHandler } from 'react'
+import React, { useCallback, useEffect, useRef, useState, WheelEventHandler } from 'react'
 import styled from 'styled-components'
 
 interface KnobProps {
@@ -11,9 +11,20 @@ interface KnobProps {
 }
 
 const Knob: React.FC<KnobProps> = ({ label, onChange, value, step, min, max }) => {
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const [displayValue, setDisplayValue] = useState<number | null>(null)
+
   const handleChange = useCallback(
     (v: number) => {
       onChange?.(v)
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+
+      setDisplayValue(Math.round(v * 100) / 100)
+
+      timeoutRef.current = setTimeout(() => setDisplayValue(null), 3000)
     },
     [onChange]
   )
@@ -25,10 +36,21 @@ const Knob: React.FC<KnobProps> = ({ label, onChange, value, step, min, max }) =
     [handleChange, max, min, step, value]
   )
 
+  useEffect(() => {
+    const timeout = timeoutRef.current
+
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+    }
+  }, [])
+
   const position = (value - min) / (max - min)
 
   return (
     <KnobWrapper onWheel={handleMouseWheel}>
+      {displayValue !== null && <KnobValue>{displayValue}</KnobValue>}
       <KnobMain position={position} />
       <KnobLabel>{label}</KnobLabel>
     </KnobWrapper>
@@ -39,10 +61,26 @@ const KnobWrapper = styled.div`
   width: 2.5rem;
   height: 2.5rem;
   margin-bottom: 0.5rem;
+  position: relative;
+`
+
+const KnobValue = styled.div`
+  position: absolute;
+  left: 2.2rem;
+  min-width: 2rem;
+  top: 1.5rem;
+  background: var(--background-color);
+  text-align: center;
+  margin: 0;
+  padding: 0.1rem;
+  border: 1px solid var(--border-color);
+  font-size: 0.7rem;
+  line-height: 0.7rem;
 `
 
 const KnobLabel = styled.div`
   text-align: center;
+  overflow: hidden;
   margin: 0;
   margin-top: -0.5rem;
   font-size: 0.8rem;
