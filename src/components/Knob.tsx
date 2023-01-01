@@ -38,6 +38,7 @@ const Knob: React.FC<KnobProps> = ({ label, onChange, value, step, min, max }) =
 const KnobWrapper = styled.div`
   width: 2.5rem;
   height: 2.5rem;
+  margin-bottom: 0.5rem;
 `
 
 const KnobLabel = styled.div`

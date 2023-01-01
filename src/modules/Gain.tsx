@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { CaseContext } from '../components/Case'
 import Knob from '../components/Knob'
 import Module from '../components/Module'
+import OutputSelector from '../components/OutputSelector'
 
 const Gain = () => {
   const gain = useRef<GainNode>()
@@ -18,7 +19,6 @@ const Gain = () => {
     }
 
     gain.current = audioCtx.createGain()
-    gain.current.connect(audioCtx.destination)
     gain.current.gain.setValueAtTime(0, audioCtx.currentTime)
 
     registerModule({ moduleName: 'gain', inputs: { main: gain.current } })
@@ -39,6 +39,9 @@ const Gain = () => {
     <Module title="Gain">
       <div>
         <Knob label="Gain" min={0} max={1} step={0.05} value={currentGain} onChange={handleGainChange} />
+      </div>
+      <div>
+        <OutputSelector audioNode={gain.current} moduleName="gain" />
       </div>
     </Module>
   )

@@ -1,7 +1,8 @@
-import { ChangeEventHandler, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 import { CaseContext } from '../components/Case'
 import Module from '../components/Module'
+import OutputSelector from '../components/OutputSelector'
 import PushButton from '../components/PushButton'
 import Sawtooth from '../icons/Sawtooth'
 import Sine from '../icons/Sine'
@@ -13,7 +14,7 @@ const SingleOscillator = () => {
 
   const oscillator = useRef<OscillatorNode>()
 
-  const { audioCtx, inputs } = useContext(CaseContext)
+  const { audioCtx } = useContext(CaseContext)
 
   // TODO Add default connections
   useEffect(() => {
@@ -32,20 +33,6 @@ const SingleOscillator = () => {
     }
   }, [audioCtx])
 
-  const inputsList = useMemo(() => {
-    return Object.entries(inputs).reduce<Record<string, AudioNode>>((acc, [moduleName, moduleIns]) => {
-      const moduleEntries = Object.entries(moduleIns).reduce<Record<string, AudioNode>>(
-        (innerAcc, [inputName, inputNode]) => {
-          const name = `${moduleName} > ${inputName}`
-          return { ...innerAcc, [name]: inputNode }
-        },
-        {}
-      )
-
-      return { ...acc, ...moduleEntries }
-    }, {})
-  }, [inputs])
-
   const handleSelect = useCallback((oscType: OscillatorType) => {
     if (!oscillator.current) {
       return
@@ -60,16 +47,6 @@ const SingleOscillator = () => {
   const handleSelectSawtooth = useCallback(() => handleSelect('sawtooth'), [handleSelect])
 
   // TODO: Generalize inputs / outputs selection
-  const handleSelectOutput = useCallback<ChangeEventHandler<HTMLSelectElement>>(
-    (e) => {
-      const id = e.target.value
-      const node = inputsList[id]
-
-      oscillator.current?.disconnect()
-      oscillator.current?.connect(node)
-    },
-    [inputsList]
-  )
 
   return (
     <Module title="SingleOscillator">
@@ -92,15 +69,7 @@ const SingleOscillator = () => {
         </PushButton>
       </div>
       <div>
-        <label>
-          <select onChange={handleSelectOutput}>
-            <option></option>
-            {Object.entries(inputsList).map(([moduleName]) => (
-              <option key={moduleName}>{moduleName}</option>
-            ))}
-          </select>
-          {' ->'}
-        </label>
+        <OutputSelector audioNode={oscillator.current} moduleName="singleOscillator" />
       </div>
     </Module>
   )
