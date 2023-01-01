@@ -1,27 +1,36 @@
-import React, { useCallback, useState, WheelEventHandler } from 'react'
+import React, { useCallback, WheelEventHandler } from 'react'
 import styled from 'styled-components'
 
 interface KnobProps {
   label?: string
+  max: number
+  min: number
+  onChange?: (value: number) => void
+  step: number
+  value: number
 }
 
-const Knob: React.FC<KnobProps> = ({ label }) => {
-  const [position, setPosition] = useState(0)
+const Knob: React.FC<KnobProps> = ({ label, onChange, value, step, min, max }) => {
+  const handleChange = useCallback(
+    (v: number) => {
+      onChange?.(v)
+    },
+    [onChange]
+  )
 
-  const handleMouseWheel = useCallback<WheelEventHandler<HTMLDivElement>>((e) => {
-    setPosition((prev) => {
-      if (e.deltaY < 0) {
-        return Math.max(0, prev - 0.05)
-      }
-      return Math.min(1, prev + 0.05)
-    })
-  }, [])
+  const handleMouseWheel = useCallback<WheelEventHandler<HTMLDivElement>>(
+    (e) => {
+      handleChange(e.deltaY < 0 ? Math.max(min, value - step) : Math.min(max, value + step))
+    },
+    [handleChange, max, min, step, value]
+  )
+
+  const position = (value - min) / (max - min)
 
   return (
     <KnobWrapper onWheel={handleMouseWheel}>
       <KnobMain position={position} />
       <KnobLabel>{label}</KnobLabel>
-      <KnobInput />
     </KnobWrapper>
   )
 }
@@ -37,13 +46,6 @@ const KnobLabel = styled.div`
   margin-top: -0.5rem;
   font-size: 0.8rem;
   line-height: 1rem;
-`
-
-const KnobInput = styled.input`
-  opacity: 0;
-  width: 0;
-  height: 0;
-  cursor: pointer;
 `
 
 interface KnobMainProps {

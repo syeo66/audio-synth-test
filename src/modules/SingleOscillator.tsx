@@ -17,6 +17,7 @@ const SingleOscillator = () => {
 
   // TODO Add default connections
   useEffect(() => {
+    // initialize audio node
     if (!audioCtx) {
       return
     }
