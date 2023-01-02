@@ -10,6 +10,8 @@ interface KnobProps {
   value: number
 }
 
+// TODO Directly change values using double click
+// TODO Change values using dragging
 const Knob: React.FC<KnobProps> = ({ label, onChange, value, step, min, max }) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 

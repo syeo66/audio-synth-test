@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 import { CaseContext } from '../components/Case'
+import Knob from '../components/Knob'
 import Module from '../components/Module'
 import OutputSelector from '../components/OutputSelector'
 import PushButton from '../components/PushButton'
@@ -11,6 +12,7 @@ import Triangle from '../icons/Triangle'
 
 const SingleOscillator = () => {
   const [oscillatorType, setOscillatorType] = useState<OscillatorType>('sine')
+  const [currentFrequencyValue, setCurrentFrequencyValue] = useState(4)
 
   const oscillator = useRef<OscillatorNode>()
 
@@ -33,6 +35,13 @@ const SingleOscillator = () => {
     }
   }, [audioCtx])
 
+  useEffect(() => {
+    if (!audioCtx) {
+      return
+    }
+    oscillator.current?.frequency.setValueAtTime(20 * Math.pow(2, currentFrequencyValue), audioCtx.currentTime)
+  }, [audioCtx, currentFrequencyValue])
+
   const handleSelect = useCallback((oscType: OscillatorType) => {
     if (!oscillator.current) {
       return
@@ -46,7 +55,7 @@ const SingleOscillator = () => {
   const handleSelectSquare = useCallback(() => handleSelect('square'), [handleSelect])
   const handleSelectSawtooth = useCallback(() => handleSelect('sawtooth'), [handleSelect])
 
-  // TODO: Generalize inputs / outputs selection
+  const handleFrequencyChange = useCallback((v: number) => setCurrentFrequencyValue(v), [])
 
   return (
     <Module title="SingleOscillator">
@@ -67,6 +76,16 @@ const SingleOscillator = () => {
         <PushButton onClick={handleSelectSawtooth} active={oscillatorType === 'sawtooth'}>
           <Sawtooth />
         </PushButton>
+      </div>
+      <div>
+        <Knob
+          label="Freq"
+          min={0}
+          max={10}
+          step={0.05}
+          value={currentFrequencyValue}
+          onChange={handleFrequencyChange}
+        />
       </div>
       <div>
         <OutputSelector audioNode={oscillator.current} moduleName="singleOscillator" />
