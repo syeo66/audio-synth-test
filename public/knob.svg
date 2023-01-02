@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g id="Scale">
+        <g transform="matrix(1.35193,0,0,1.66166,-109.602,-280.045)">
+            <path d="M202.085,686.883C135.815,633.107 94.786,558.75 94.786,476.659C94.786,312.758 258.338,179.692 459.789,179.692C661.239,179.692 824.791,312.758 824.791,476.659C824.791,558.402 784.109,632.476 718.334,686.198" style="fill:none;fill-opacity:0;stroke:white;stroke-width:13.2px;"/>
+        </g>
+        <path d="M960,960L862.585,862.585" style="fill:none;stroke:white;stroke-width:20px;"/>
+        <g transform="matrix(0.986637,0.0133634,0.0133634,0.986637,-11.9736,11.9736)">
+            <path d="M164.09,859.91L64,960" style="fill:none;stroke:white;stroke-width:20px;"/>
+        </g>
+    </g>
+    <g id="Knob">
+        <g transform="matrix(1.12427,0,0,1.38185,-4.92899,-146.67)">
+            <ellipse cx="459.789" cy="476.659" rx="365.003" ry="296.967" style="fill:none;fill-opacity:0;stroke:white;stroke-width:15.88px;"/>
+        </g>
+        <path d="M512,512L223.86,800.14" style="fill:none;stroke:white;stroke-width:20px;"/>
+    </g>
+</svg>

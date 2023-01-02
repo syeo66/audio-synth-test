@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState, WheelEventHandler } from 'react'
+import React, { MouseEventHandler, useCallback, useEffect, useRef, useState, WheelEventHandler } from 'react'
 import styled from 'styled-components'
 
 interface KnobProps {
@@ -10,12 +10,15 @@ interface KnobProps {
   value: number
 }
 
+const VALUE_TIMEOUT = 3000
+const DRAGGING_DENOMINATOR = 200
+
 // TODO Directly change values using double click
-// TODO Change values using dragging
-const Knob: React.FC<KnobProps> = ({ label, onChange, value, step, min, max }) => {
+const Knob: React.FC<KnobProps> = ({ label, onChange, value: inputValue, step, min, max }) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const [displayValue, setDisplayValue] = useState<number | null>(null)
+  const [value, setValue] = useState(inputValue)
 
   const handleChange = useCallback(
     (v: number) => {
@@ -26,19 +29,36 @@ const Knob: React.FC<KnobProps> = ({ label, onChange, value, step, min, max }) =
 
       setDisplayValue(Math.round(v * 100) / 100)
 
-      timeoutRef.current = setTimeout(() => setDisplayValue(null), 3000)
+      timeoutRef.current = setTimeout(() => setDisplayValue(null), VALUE_TIMEOUT)
     },
     [onChange]
   )
 
-  const handleMouseWheel = useCallback<WheelEventHandler<HTMLDivElement>>(
-    (e) => {
-      handleChange(e.deltaY < 0 ? Math.max(min, value - step) : Math.min(max, value + step))
+  const handleDrag = useCallback(
+    (e: MouseEvent) => {
+      e.preventDefault()
+      setValue((prev) => Math.max(min, Math.min(max, prev + -e.movementY * ((max - min) / DRAGGING_DENOMINATOR))))
     },
-    [handleChange, max, min, step, value]
+    [max, min]
+  )
+
+  const handleMouseUp = useCallback(() => {
+    document.removeEventListener('mousemove', handleDrag)
+    document.removeEventListener('mouseup', handleMouseUp)
+  }, [handleDrag])
+
+  const handleMouseDown = useCallback<MouseEventHandler<HTMLDivElement>>(() => {
+    document.addEventListener('mousemove', handleDrag)
+    document.addEventListener('mouseup', handleMouseUp)
+  }, [handleDrag, handleMouseUp])
+
+  const handleMouseWheel = useCallback<WheelEventHandler<HTMLDivElement>>(
+    (e) => setValue(e.deltaY < 0 ? Math.max(min, value - step) : Math.min(max, value + step)),
+    [max, min, step, value]
   )
 
   useEffect(() => {
+    // clear timeout on unmount
     const timeout = timeoutRef.current
 
     return () => {
@@ -48,10 +68,14 @@ const Knob: React.FC<KnobProps> = ({ label, onChange, value, step, min, max }) =
     }
   }, [])
 
+  useEffect(() => {
+    handleChange(value)
+  }, [handleChange, value])
+
   const position = (value - min) / (max - min)
 
   return (
-    <KnobWrapper onWheel={handleMouseWheel}>
+    <KnobWrapper onWheel={handleMouseWheel} onMouseDown={handleMouseDown}>
       {displayValue !== null && <KnobValue>{displayValue}</KnobValue>}
       <KnobMain position={position} />
       <KnobLabel>{label}</KnobLabel>
