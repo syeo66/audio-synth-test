@@ -1,8 +1,9 @@
 import React, { createContext, PropsWithChildren, useCallback, useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
 
-import Button from './Button'
-import inputsReducer, { InputsState, ModuleInputs } from './reducers/inputsReducer'
+import Button from '../Button'
+import inputsReducer, { InputsState, ModuleInputs } from '../reducers/inputsReducer'
+import Output from './Output'
 
 interface RegisterModuleData {
   moduleName: string
@@ -38,7 +39,12 @@ const Case: React.FC<PropsWithChildren> = ({ children }) => {
     <CaseContext.Provider value={caseData}>
       <CaseWrapper>
         {!audioCtx && <Button onClick={handleStart}>Start Rack</Button>}
-        {!!audioCtx && children}
+        {!!audioCtx && (
+          <>
+            <Output />
+            {children}
+          </>
+        )}
       </CaseWrapper>
     </CaseContext.Provider>
   )
