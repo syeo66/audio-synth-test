@@ -3,6 +3,8 @@ import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { CaseContext } from '../components/Case'
 import Knob from '../components/Knob'
 import Module from '../components/Module'
+import ModuleFooter from '../components/ModuleFooter'
+import ModuleSection from '../components/ModuleSection'
 import OutputSelector from '../components/OutputSelector'
 import PushButton from '../components/PushButton'
 import Sawtooth from '../icons/Sawtooth'
@@ -59,7 +61,7 @@ const SingleOscillator = () => {
 
   return (
     <Module title="SingleOscillator">
-      <div>
+      <ModuleSection>
         <PushButton onClick={handleSelectSine} active={oscillatorType === 'sine'}>
           <Sine />
         </PushButton>
@@ -67,8 +69,9 @@ const SingleOscillator = () => {
         <PushButton onClick={handleSelectTriangle} active={oscillatorType === 'triangle'}>
           <Triangle />
         </PushButton>
-      </div>
-      <div>
+      </ModuleSection>
+
+      <ModuleSection>
         <PushButton onClick={handleSelectSquare} active={oscillatorType === 'square'}>
           <Square />
         </PushButton>
@@ -76,8 +79,9 @@ const SingleOscillator = () => {
         <PushButton onClick={handleSelectSawtooth} active={oscillatorType === 'sawtooth'}>
           <Sawtooth />
         </PushButton>
-      </div>
-      <div>
+      </ModuleSection>
+
+      <ModuleSection>
         <Knob
           label="Freq"
           min={0}
@@ -86,10 +90,11 @@ const SingleOscillator = () => {
           value={currentFrequencyValue}
           onChange={handleFrequencyChange}
         />
-      </div>
-      <div>
+      </ModuleSection>
+
+      <ModuleFooter>
         <OutputSelector audioNode={oscillator.current} moduleName="singleOscillator" />
-      </div>
+      </ModuleFooter>
     </Module>
   )
 }

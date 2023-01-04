@@ -1,5 +1,7 @@
 import Knob from '../components/Knob'
 import Module from '../components/Module'
+import ModuleFooter from '../components/ModuleFooter'
+import ModuleSection from '../components/ModuleSection'
 import OutputSelector from '../components/OutputSelector'
 import useGain from '../hooks/useGain'
 
@@ -8,12 +10,13 @@ const Gain = () => {
 
   return (
     <Module title="Gain">
-      <div>
+      <ModuleSection>
         <Knob label="Gain" min={0} max={1} step={0.05} value={currentGain} onChange={handleGainChange} />
-      </div>
-      <div>
+      </ModuleSection>
+
+      <ModuleFooter>
         <OutputSelector audioNode={gainNode.current} moduleName="gain" />
-      </div>
+      </ModuleFooter>
     </Module>
   )
 }

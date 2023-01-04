@@ -3,6 +3,8 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { CaseContext } from '../components/Case'
 import Knob from '../components/Knob'
 import Module from '../components/Module'
+import ModuleFooter from '../components/ModuleFooter'
+import ModuleSection from '../components/ModuleSection'
 import OutputSelector from '../components/OutputSelector'
 
 const Filter12db: React.FC = () => {
@@ -48,15 +50,15 @@ const Filter12db: React.FC = () => {
 
   return (
     <Module title="12dB Filter">
-      <div>
+      <ModuleSection>
         <Knob label="Freq." min={20} max={10000} step={20} value={currentFrequency} onChange={handleFilterChange} />
-      </div>
-      <div>
+      </ModuleSection>
+      <ModuleSection>
         <Knob label="Q" min={0} max={30} step={0.5} value={currentQ} onChange={handleQChange} />
-      </div>
-      <div>
+      </ModuleSection>
+      <ModuleFooter>
         <OutputSelector audioNode={filterNode.current} moduleName="filter 12dB" />
-      </div>
+      </ModuleFooter>
     </Module>
   )
 }
