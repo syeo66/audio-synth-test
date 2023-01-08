@@ -51,11 +51,15 @@ const Case: React.FC<PropsWithChildren> = ({ children }) => {
 }
 
 const CaseWrapper = styled.div`
-  min-width: 100%;
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
+  width: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  @media screen and (min-width: 820px) {
+    justify-content: center;
+  }
 `
 
 export default Case

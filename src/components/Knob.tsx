@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useCallback, useEffect, useRef, useState, WheelEventHandler } from 'react'
+import React, { useCallback, useEffect, useRef, useState, WheelEventHandler } from 'react'
 import styled from 'styled-components'
 
 interface KnobProps {
@@ -47,7 +47,7 @@ const Knob: React.FC<KnobProps> = ({ label, onChange, value: inputValue, step, m
     document.removeEventListener('mouseup', handleMouseUp)
   }, [handleDrag])
 
-  const handleMouseDown = useCallback<MouseEventHandler<HTMLDivElement>>(() => {
+  const handleMouseDown = useCallback(() => {
     document.addEventListener('mousemove', handleDrag)
     document.addEventListener('mouseup', handleMouseUp)
   }, [handleDrag, handleMouseUp])
@@ -75,7 +75,7 @@ const Knob: React.FC<KnobProps> = ({ label, onChange, value: inputValue, step, m
   const position = (value - min) / (max - min)
 
   return (
-    <KnobWrapper onWheel={handleMouseWheel} onMouseDown={handleMouseDown}>
+    <KnobWrapper onWheel={handleMouseWheel} onMouseDown={handleMouseDown} onTouchStart={handleMouseDown}>
       {displayValue !== null && <KnobValue>{displayValue}</KnobValue>}
       <KnobMain position={position} />
       <KnobLabel>{label}</KnobLabel>
