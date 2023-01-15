@@ -1,4 +1,9 @@
-export type ModuleInputs = Record<string, AudioNode>
+export type FrequencyInput = (freq: number) => void
+
+export interface ModuleInputs {
+  nodeInputs?: Record<string, AudioNode>
+  frequencyInputs?: Record<string, FrequencyInput>
+}
 export type InputsState = Record<string, ModuleInputs>
 
 interface AddInputsAction {

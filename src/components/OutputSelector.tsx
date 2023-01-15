@@ -16,7 +16,7 @@ const OutputSelector: React.FC<OutputSelectorProps> = ({ audioNode, moduleName: 
         return acc
       }
 
-      const moduleEntries = Object.entries(moduleIns).reduce<Record<string, AudioNode>>(
+      const moduleEntries = Object.entries(moduleIns.nodeInputs || {}).reduce<Record<string, AudioNode>>(
         (innerAcc, [inputName, inputNode]) => {
           const name = `${moduleName} > ${inputName}`
           return { ...innerAcc, [name]: inputNode }

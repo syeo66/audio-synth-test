@@ -32,7 +32,12 @@ const Case: React.FC<PropsWithChildren> = ({ children }) => {
   const handleStart = useCallback(() => {
     const ctx = new AudioContext()
     setAudioCtx(ctx)
-    registerModule({ moduleName: 'case', inputs: { output: ctx.destination } })
+    registerModule({
+      moduleName: 'case',
+      inputs: {
+        nodeInputs: { output: ctx.destination },
+      },
+    })
   }, [registerModule])
 
   return (

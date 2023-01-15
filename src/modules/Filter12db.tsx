@@ -24,7 +24,7 @@ const Filter12db: React.FC = () => {
     filterNode.current = audioCtx.createBiquadFilter()
     filterNode.current.frequency.setValueAtTime(0, audioCtx.currentTime)
 
-    registerModule({ moduleName: 'filter 12dB', inputs: { main: filterNode.current } })
+    registerModule({ moduleName: 'filter 12dB', inputs: { nodeInputs: { main: filterNode.current } } })
   }, [audioCtx, registerModule])
 
   useEffect(() => {

@@ -23,7 +23,7 @@ const useGain = ({ moduleName, inputName = 'main' }: UseGainInput) => {
     gainNode.current = audioCtx.createGain()
     gainNode.current.gain.setValueAtTime(0, audioCtx.currentTime)
 
-    registerModule({ moduleName, inputs: { [inputName]: gainNode.current } })
+    registerModule({ moduleName, inputs: { nodeInputs: { [inputName]: gainNode.current } } })
   }, [audioCtx, inputName, moduleName, registerModule])
 
   useEffect(() => {
