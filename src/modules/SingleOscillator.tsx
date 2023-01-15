@@ -14,11 +14,14 @@ import Triangle from '../icons/Triangle'
 
 const SingleOscillator: React.FC = () => {
   const [oscillatorType, setOscillatorType] = useState<OscillatorType>('sine')
+
+  // TODO refactor to actually use frequencies instead of numbers
+  // but the dial should still use the numbers (similar to V/Oct)
   const [currentFrequencyValue, setCurrentFrequencyValue] = useState(4)
 
   const oscillator = useRef<OscillatorNode>()
 
-  const { audioCtx } = useContext(CaseContext)
+  const { audioCtx, registerModule } = useContext(CaseContext)
 
   // TODO Add default connections
   useEffect(() => {
@@ -31,11 +34,20 @@ const SingleOscillator: React.FC = () => {
     oscillator.current.start()
     oscillator.current.frequency.setValueAtTime(Math.random() * 100 + 100, audioCtx.currentTime)
 
+    registerModule({
+      moduleName: 'oscillator',
+      inputs: {
+        frequencyInputs: {
+          frequency: (val) => setCurrentFrequencyValue(val),
+        },
+      },
+    })
+
     return () => {
       oscillator.current?.stop()
       oscillator.current?.disconnect()
     }
-  }, [audioCtx])
+  }, [audioCtx, registerModule])
 
   useEffect(() => {
     if (!audioCtx) {
