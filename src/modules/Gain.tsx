@@ -1,3 +1,5 @@
+import React from 'react'
+
 import Knob from '../components/Knob'
 import Module from '../components/Module'
 import ModuleFooter from '../components/ModuleFooter'
@@ -5,7 +7,7 @@ import ModuleSection from '../components/ModuleSection'
 import NodeOutputSelector from '../components/NodeOutputSelector'
 import useGain from '../hooks/useGain'
 
-const Gain = () => {
+const Gain: React.FC = () => {
   const { currentGain, handleGainChange, gainNode } = useGain({ moduleName: 'gain' })
 
   return (

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 import { CaseContext } from '../components/Case'
 import Knob from '../components/Knob'
@@ -12,7 +12,7 @@ import Sine from '../icons/Sine'
 import Square from '../icons/Square'
 import Triangle from '../icons/Triangle'
 
-const SingleOscillator = () => {
+const SingleOscillator: React.FC = () => {
   const [oscillatorType, setOscillatorType] = useState<OscillatorType>('sine')
   const [currentFrequencyValue, setCurrentFrequencyValue] = useState(4)
 
