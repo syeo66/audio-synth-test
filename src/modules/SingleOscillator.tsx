@@ -5,7 +5,7 @@ import Knob from '../components/Knob'
 import Module from '../components/Module'
 import ModuleFooter from '../components/ModuleFooter'
 import ModuleSection from '../components/ModuleSection'
-import OutputSelector from '../components/OutputSelector'
+import NodeOutputSelector from '../components/NodeOutputSelector'
 import PushButton from '../components/PushButton'
 import Sawtooth from '../icons/Sawtooth'
 import Sine from '../icons/Sine'
@@ -93,7 +93,7 @@ const SingleOscillator = () => {
       </ModuleSection>
 
       <ModuleFooter>
-        <OutputSelector audioNode={oscillator.current} moduleName="singleOscillator" />
+        <NodeOutputSelector audioNode={oscillator.current} moduleName="singleOscillator" />
       </ModuleFooter>
     </Module>
   )

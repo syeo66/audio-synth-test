@@ -2,7 +2,7 @@ import Knob from '../components/Knob'
 import Module from '../components/Module'
 import ModuleFooter from '../components/ModuleFooter'
 import ModuleSection from '../components/ModuleSection'
-import OutputSelector from '../components/OutputSelector'
+import NodeOutputSelector from '../components/NodeOutputSelector'
 import useGain from '../hooks/useGain'
 
 const Gain = () => {
@@ -15,7 +15,7 @@ const Gain = () => {
       </ModuleSection>
 
       <ModuleFooter>
-        <OutputSelector audioNode={gainNode.current} moduleName="gain" />
+        <NodeOutputSelector audioNode={gainNode.current} moduleName="gain" />
       </ModuleFooter>
     </Module>
   )

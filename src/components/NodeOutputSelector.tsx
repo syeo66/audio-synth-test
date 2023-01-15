@@ -7,7 +7,7 @@ interface OutputSelectorProps {
   moduleName: string
 }
 
-const OutputSelector: React.FC<OutputSelectorProps> = ({ audioNode, moduleName: inputModuleName }) => {
+const NodeOutputSelector: React.FC<OutputSelectorProps> = ({ audioNode, moduleName: inputModuleName }) => {
   const { inputs } = useContext(CaseContext)
 
   const inputsList = useMemo(() => {
@@ -52,4 +52,4 @@ const OutputSelector: React.FC<OutputSelectorProps> = ({ audioNode, moduleName: 
   )
 }
 
-export default memo(OutputSelector)
+export default memo(NodeOutputSelector)

@@ -5,7 +5,7 @@ import Knob from '../components/Knob'
 import Module from '../components/Module'
 import ModuleFooter from '../components/ModuleFooter'
 import ModuleSection from '../components/ModuleSection'
-import OutputSelector from '../components/OutputSelector'
+import NodeOutputSelector from '../components/NodeOutputSelector'
 
 const Filter12db: React.FC = () => {
   const filterNode = useRef<BiquadFilterNode>()
@@ -57,7 +57,7 @@ const Filter12db: React.FC = () => {
         <Knob label="Q" min={0} max={30} step={0.5} value={currentQ} onChange={handleQChange} />
       </ModuleSection>
       <ModuleFooter>
-        <OutputSelector audioNode={filterNode.current} moduleName="filter 12dB" />
+        <NodeOutputSelector audioNode={filterNode.current} moduleName="filter 12dB" />
       </ModuleFooter>
     </Module>
   )
