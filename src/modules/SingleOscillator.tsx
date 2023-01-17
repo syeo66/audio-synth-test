@@ -17,7 +17,7 @@ const SingleOscillator: React.FC = () => {
 
   // TODO refactor to actually use frequencies instead of numbers
   // but the dial should still use the numbers (similar to V/Oct)
-  const [currentFrequencyValue, setCurrentFrequencyValue] = useState(4)
+  const [currentFrequency, setCurrentFrequency] = useState(440)
 
   const oscillator = useRef<OscillatorNode>()
 
@@ -38,7 +38,7 @@ const SingleOscillator: React.FC = () => {
       moduleName: 'oscillator',
       inputs: {
         frequencyInputs: {
-          frequency: (val) => setCurrentFrequencyValue(val),
+          frequency: (val) => setCurrentFrequency(val),
         },
       },
     })
@@ -53,8 +53,8 @@ const SingleOscillator: React.FC = () => {
     if (!audioCtx) {
       return
     }
-    oscillator.current?.frequency.setValueAtTime(20 * Math.pow(2, currentFrequencyValue), audioCtx.currentTime)
-  }, [audioCtx, currentFrequencyValue])
+    oscillator.current?.frequency.setValueAtTime(currentFrequency, audioCtx.currentTime)
+  }, [audioCtx, currentFrequency])
 
   const handleSelect = useCallback((oscType: OscillatorType) => {
     if (!oscillator.current) {
@@ -69,7 +69,9 @@ const SingleOscillator: React.FC = () => {
   const handleSelectSquare = useCallback(() => handleSelect('square'), [handleSelect])
   const handleSelectSawtooth = useCallback(() => handleSelect('sawtooth'), [handleSelect])
 
-  const handleFrequencyChange = useCallback((v: number) => setCurrentFrequencyValue(v), [])
+  const handleFrequencyChange = useCallback((v: number) => setCurrentFrequency(valueToFrequency(v)), [])
+
+  const frequencyKnobValue = frequencyToValue(currentFrequency)
 
   return (
     <Module title="SingleOscillator">
@@ -94,14 +96,7 @@ const SingleOscillator: React.FC = () => {
       </ModuleSection>
 
       <ModuleSection>
-        <Knob
-          label="Freq"
-          min={0}
-          max={10}
-          step={0.05}
-          value={currentFrequencyValue}
-          onChange={handleFrequencyChange}
-        />
+        <Knob label="Freq" min={0} max={10} step={0.05} value={frequencyKnobValue} onChange={handleFrequencyChange} />
       </ModuleSection>
 
       <ModuleFooter>
@@ -110,5 +105,8 @@ const SingleOscillator: React.FC = () => {
     </Module>
   )
 }
+
+const valueToFrequency = (v: number) => 20 * Math.pow(2, v)
+const frequencyToValue = (freq: number) => Math.log(freq / 5) / Math.log(2) - 2
 
 export default SingleOscillator
