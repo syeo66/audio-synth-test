@@ -1,4 +1,4 @@
-export type FrequencyInput = (freq: number) => void
+import type { FrequencyInput } from '../Case'
 
 export interface ModuleInputs {
   nodeInputs?: Record<string, AudioNode>
