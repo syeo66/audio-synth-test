@@ -1,12 +1,13 @@
-import React, { useContext, useMemo } from 'react'
+import React, { ChangeEventHandler, useCallback, useContext, useMemo } from 'react'
 
 import { CaseContext, FrequencyInput } from './Case'
 
 interface FrequencyOutputSelectorProps {
   moduleName: string
+  onChange?: (input: FrequencyInput) => void
 }
 
-const FrequencyOutputSelector: React.FC<FrequencyOutputSelectorProps> = ({ moduleName: inputModuleName }) => {
+const FrequencyOutputSelector: React.FC<FrequencyOutputSelectorProps> = ({ moduleName: inputModuleName, onChange }) => {
   const { inputs } = useContext(CaseContext)
 
   const inputsList = useMemo(() => {
@@ -27,9 +28,14 @@ const FrequencyOutputSelector: React.FC<FrequencyOutputSelectorProps> = ({ modul
     }, {})
   }, [inputModuleName, inputs])
 
+  const handleChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(
+    (e) => onChange?.(inputsList[e.target.value]),
+    [onChange, inputsList]
+  )
+
   return (
     <label>
-      <select>
+      <select onChange={handleChange}>
         <option></option>
         {Object.entries(inputsList).map(([moduleName]) => (
           <option key={moduleName}>{moduleName}</option>
