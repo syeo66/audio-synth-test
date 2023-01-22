@@ -1,5 +1,7 @@
 import React, { ChangeEventHandler, memo, useCallback, useContext, useMemo } from 'react'
+import styled from 'styled-components'
 
+import ArrowRight from '../icons/ArrowRight'
 import { CaseContext } from './Case'
 
 interface OutputSelectorProps {
@@ -40,16 +42,25 @@ const NodeOutputSelector: React.FC<OutputSelectorProps> = ({ audioNode, moduleNa
   )
 
   return (
-    <label>
+    <Label>
       <select onChange={handleSelectOutput}>
         <option></option>
         {Object.entries(inputsList).map(([moduleName]) => (
           <option key={moduleName}>{moduleName}</option>
         ))}
       </select>
-      {' ->'}
-    </label>
+      <ArrowRight />
+    </Label>
   )
 }
+
+const Label = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & > select {
+    margin-right: 0.25em;
+  }
+`
 
 export default memo(NodeOutputSelector)

@@ -1,5 +1,7 @@
 import React, { ChangeEventHandler, useCallback, useContext, useMemo } from 'react'
+import styled from 'styled-components'
 
+import ArrowRight from '../icons/ArrowRight'
 import { CaseContext, FrequencyInput } from './Case'
 
 interface FrequencyOutputSelectorProps {
@@ -34,16 +36,25 @@ const FrequencyOutputSelector: React.FC<FrequencyOutputSelectorProps> = ({ modul
   )
 
   return (
-    <label>
+    <Label>
       <select onChange={handleChange}>
         <option></option>
         {Object.entries(inputsList).map(([moduleName]) => (
           <option key={moduleName}>{moduleName}</option>
         ))}
       </select>
-      {' ->'}
-    </label>
+      <ArrowRight />
+    </Label>
   )
 }
+
+const Label = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & > select {
+    margin-right: 0.25em;
+  }
+`
 
 export default FrequencyOutputSelector
