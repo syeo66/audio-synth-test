@@ -69,7 +69,18 @@ const SingleOscillator: React.FC = () => {
   const handleSelectSquare = useCallback(() => handleSelect('square'), [handleSelect])
   const handleSelectSawtooth = useCallback(() => handleSelect('sawtooth'), [handleSelect])
 
-  const handleFrequencyChange = useCallback((v: number) => setCurrentFrequency(valueToFrequency(v)), [])
+  const handleFrequencyChange = useCallback(
+    (v: number) => {
+      const freq = valueToFrequency(v)
+
+      if (audioCtx) {
+        oscillator.current?.frequency.setValueAtTime(freq, audioCtx.currentTime)
+      }
+
+      setCurrentFrequency(freq)
+    },
+    [audioCtx]
+  )
 
   const frequencyKnobValue = frequencyToValue(currentFrequency)
 
