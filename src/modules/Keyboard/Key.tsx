@@ -4,16 +4,19 @@ import styled from 'styled-components'
 import type { Note } from './Keyboard'
 
 interface KeyProps {
-  onPlay?: (freq: number) => void
   note: Note
+  octave?: number
+  onPlay?: (freq: number) => void
 }
 
-const Key: React.FC<KeyProps> = ({ note: { note, freq, color }, onPlay }) => {
+const Key: React.FC<KeyProps> = ({ note: { note, freq, color }, onPlay, octave = 0 }) => {
+  const f = freq * Math.pow(2, octave)
+
   if (color === 'black') {
-    return <BlackKey onMouseDown={() => onPlay?.(freq)} />
+    return <BlackKey onMouseDown={() => onPlay?.(f)} />
   }
 
-  return <WhiteKey onMouseDown={() => onPlay?.(freq)}>{note}</WhiteKey>
+  return <WhiteKey onMouseDown={() => onPlay?.(f)}>{note}</WhiteKey>
 }
 
 const BlackKey = styled.div`

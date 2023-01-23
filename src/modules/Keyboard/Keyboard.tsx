@@ -1,10 +1,11 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import type { FrequencyInput } from '../../components/Case'
 import FrequencyOutputSelector from '../../components/FrequencyOutputSelector'
 import Module from '../../components/Module'
 import ModuleFooter from '../../components/ModuleFooter'
+import PushButton from '../../components/PushButton'
 import Key from './Key'
 
 export interface Note {
@@ -38,6 +39,8 @@ const notes: Note[] = [
 ]
 
 const Keyboard: React.FC = () => {
+  const [octave, setOctave] = useState(0)
+
   const frequencyOutput = useRef<FrequencyInput>()
 
   const handleChange = useCallback((e: FrequencyInput) => {
@@ -45,13 +48,31 @@ const Keyboard: React.FC = () => {
   }, [])
 
   const handleFreqChange = useCallback((f: number) => frequencyOutput.current?.(f), [])
+  const handleOctaveChange = useCallback((v: number) => setOctave(v), [])
 
   return (
     <Module title="Keyboard">
+      <div>
+        <PushButton small onClick={() => handleOctaveChange(-2)} active={octave === -2}>
+          -2
+        </PushButton>
+        <PushButton small onClick={() => handleOctaveChange(-1)} active={octave === -1}>
+          -1
+        </PushButton>
+        <PushButton small onClick={() => handleOctaveChange(0)} active={octave === 0}>
+          0
+        </PushButton>
+        <PushButton small onClick={() => handleOctaveChange(1)} active={octave === 1}>
+          +1
+        </PushButton>
+        <PushButton small onClick={() => handleOctaveChange(2)} active={octave === 2}>
+          +2
+        </PushButton>
+      </div>
       <KeyboardWrapper>
         <KeysWrapper>
           {notes.map((note) => (
-            <Key onPlay={handleFreqChange} note={note} />
+            <Key key={`${note.freq}${octave}`} onPlay={handleFreqChange} note={note} octave={octave} />
           ))}
         </KeysWrapper>
       </KeyboardWrapper>
