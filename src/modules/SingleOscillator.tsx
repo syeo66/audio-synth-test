@@ -15,9 +15,8 @@ import Triangle from '../icons/Triangle'
 const SingleOscillator: React.FC = () => {
   const [oscillatorType, setOscillatorType] = useState<OscillatorType>('sine')
 
-  // TODO refactor to actually use frequencies instead of numbers
-  // but the dial should still use the numbers (similar to V/Oct)
   const [currentFrequency, setCurrentFrequency] = useState(440)
+  const [detune, setDetune] = useState(0)
 
   const oscillator = useRef<OscillatorNode>()
 
@@ -53,8 +52,8 @@ const SingleOscillator: React.FC = () => {
     if (!audioCtx) {
       return
     }
-    oscillator.current?.frequency.setValueAtTime(currentFrequency, audioCtx.currentTime)
-  }, [audioCtx, currentFrequency])
+    oscillator.current?.frequency.setValueAtTime(currentFrequency + detune, audioCtx.currentTime)
+  }, [audioCtx, currentFrequency, detune])
 
   const handleSelect = useCallback((oscType: OscillatorType) => {
     if (!oscillator.current) {
@@ -69,18 +68,12 @@ const SingleOscillator: React.FC = () => {
   const handleSelectSquare = useCallback(() => handleSelect('square'), [handleSelect])
   const handleSelectSawtooth = useCallback(() => handleSelect('sawtooth'), [handleSelect])
 
-  const handleFrequencyChange = useCallback(
-    (v: number) => {
-      const freq = valueToFrequency(v)
+  const handleFrequencyChange = useCallback((v: number) => {
+    const freq = valueToFrequency(v)
+    setCurrentFrequency(freq)
+  }, [])
 
-      if (audioCtx) {
-        oscillator.current?.frequency.setValueAtTime(freq, audioCtx.currentTime)
-      }
-
-      setCurrentFrequency(freq)
-    },
-    [audioCtx]
-  )
+  const handleDetuneChange = useCallback((v: number) => setDetune(v), [])
 
   const frequencyKnobValue = frequencyToValue(currentFrequency)
 
@@ -108,6 +101,10 @@ const SingleOscillator: React.FC = () => {
 
       <ModuleSection>
         <Knob label="Freq" min={0} max={10} step={0.05} value={frequencyKnobValue} onChange={handleFrequencyChange} />
+      </ModuleSection>
+
+      <ModuleSection>
+        <Knob label="Detune" min={-100} max={100} step={0.05} value={detune} onChange={handleDetuneChange} />
       </ModuleSection>
 
       <ModuleFooter>

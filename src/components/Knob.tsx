@@ -86,7 +86,7 @@ const Knob: React.FC<KnobProps> = ({ label, onChange, value: inputValue, step, m
 const KnobWrapper = styled.div`
   width: 2.5rem;
   height: 2.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
   position: relative;
 `
 
