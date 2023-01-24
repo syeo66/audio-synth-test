@@ -52,7 +52,7 @@ const SingleOscillator: React.FC = () => {
     if (!audioCtx) {
       return
     }
-    oscillator.current?.frequency.setValueAtTime(currentFrequency + detune, audioCtx.currentTime)
+    oscillator.current?.frequency.setValueAtTime(currentFrequency * Math.pow(2, detune / 1200), audioCtx.currentTime)
   }, [audioCtx, currentFrequency, detune])
 
   const handleSelect = useCallback((oscType: OscillatorType) => {
