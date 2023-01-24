@@ -106,7 +106,6 @@ const KnobValue = styled.div`
 
 const KnobLabel = styled.div`
   text-align: center;
-  overflow: hidden;
   margin: 0;
   margin-top: -0.5rem;
   font-size: 0.8rem;
