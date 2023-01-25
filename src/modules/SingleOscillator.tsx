@@ -52,7 +52,7 @@ const SingleOscillator: React.FC = () => {
     if (!audioCtx) {
       return
     }
-    oscillator.current?.frequency.setValueAtTime(currentFrequency * Math.pow(2, detune / 1200), audioCtx.currentTime)
+    oscillator.current?.frequency.setValueAtTime(applyDetune(currentFrequency, detune), audioCtx.currentTime)
   }, [audioCtx, currentFrequency, detune])
 
   const handleSelect = useCallback((oscType: OscillatorType) => {
@@ -114,7 +114,8 @@ const SingleOscillator: React.FC = () => {
   )
 }
 
-const valueToFrequency = (v: number) => 20 * Math.pow(2, v)
+const applyDetune = (freq: number, detune: number) => freq * Math.pow(2, detune / 1200)
 const frequencyToValue = (freq: number) => Math.log(freq / 5) / Math.log(2) - 2
+const valueToFrequency = (v: number) => 20 * Math.pow(2, v)
 
 export default SingleOscillator
