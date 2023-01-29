@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState, WheelEventHandler } from 'react'
+import React, { TouchEventHandler, useCallback, useEffect, useRef, useState, WheelEventHandler } from 'react'
 import styled from 'styled-components'
 
 interface KnobProps {
@@ -13,9 +13,16 @@ interface KnobProps {
 const VALUE_TIMEOUT = 3000
 const DRAGGING_DENOMINATOR = 200
 
+interface Coords {
+  x: number
+  y: number
+}
+
 // TODO Directly change values using double click
 const Knob: React.FC<KnobProps> = ({ label, onChange, value: inputValue, step, min, max }) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const touchCoords = useRef<Coords | null>(null)
 
   const [displayValue, setDisplayValue] = useState<number | null>(null)
   const [value, setValue] = useState(inputValue)
@@ -52,6 +59,33 @@ const Knob: React.FC<KnobProps> = ({ label, onChange, value: inputValue, step, m
     document.addEventListener('mouseup', handleMouseUp)
   }, [handleDrag, handleMouseUp])
 
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (!touchCoords.current) {
+        return
+      }
+      const delta = touchCoords.current.y - e.touches[0].screenY
+      touchCoords.current = { x: e.touches[0].screenX, y: e.touches[0].screenY }
+      setValue((prev) => Math.max(min, Math.min(max, prev + delta * ((max - min) / DRAGGING_DENOMINATOR))))
+    },
+    [max, min]
+  )
+
+  const handleTouchEnd = useCallback(() => {
+    touchCoords.current = null
+    document.removeEventListener('touchmove', handleTouchMove)
+    document.removeEventListener('touchend', handleTouchEnd)
+  }, [handleTouchMove])
+
+  const handleTouchStart = useCallback<TouchEventHandler<HTMLDivElement>>(
+    (e) => {
+      touchCoords.current = { x: e.touches[0].screenX, y: e.touches[0].screenY }
+      document.addEventListener('touchmove', handleTouchMove)
+      document.addEventListener('touchend', handleTouchEnd)
+    },
+    [handleTouchEnd, handleTouchMove]
+  )
+
   const handleMouseWheel = useCallback<WheelEventHandler<HTMLDivElement>>(
     (e) => setValue(e.deltaY < 0 ? Math.max(min, value - step) : Math.min(max, value + step)),
     [max, min, step, value]
@@ -75,7 +109,7 @@ const Knob: React.FC<KnobProps> = ({ label, onChange, value: inputValue, step, m
   const position = (value - min) / (max - min)
 
   return (
-    <KnobWrapper onWheel={handleMouseWheel} onMouseDown={handleMouseDown} onTouchStart={handleMouseDown}>
+    <KnobWrapper onWheel={handleMouseWheel} onMouseDown={handleMouseDown} onTouchStart={handleTouchStart}>
       {displayValue !== null && <KnobValue>{displayValue}</KnobValue>}
       <KnobMain position={position} />
       <KnobLabel>{label}</KnobLabel>
@@ -88,6 +122,7 @@ const KnobWrapper = styled.div`
   height: 2.5rem;
   margin-bottom: 0.8rem;
   position: relative;
+  touch-action: none;
 `
 
 const KnobValue = styled.div`
