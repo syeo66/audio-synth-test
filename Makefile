@@ -4,7 +4,7 @@ help:
 	@echo "make clean     Clean the build artifacts."
 
 .PHONY: build
-build: dist 
+build: dist
 
 dist: node_modules src
 	yarn build
@@ -15,6 +15,12 @@ start: node_modules
 
 preview: node_modules src
 	yarn preview
+
+.PHONY: deploy
+deploy: node_modules
+	git switch main && git push all && git push
+	git switch stage && git pull && git merge main && git push all && git push
+	git switch main
 
 .PHONY: clean
 clean:
