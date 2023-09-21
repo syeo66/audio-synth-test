@@ -7,14 +7,14 @@ help:
 build: dist
 
 dist: node_modules src
-	yarn build
+	npm run build
 	touch dist
 
 start: node_modules
-	yarn dev
+	npm run dev
 
 preview: node_modules src
-	yarn preview
+	npm run preview
 
 .PHONY: deploy
 deploy: node_modules
@@ -28,6 +28,6 @@ clean:
 
 ######################################################################
 
-node_modules : yarn.lock package.json
-	yarn
+node_modules : package-lock.json package.json
+	npm install
 	touch node_modules
