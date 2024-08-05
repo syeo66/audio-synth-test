@@ -1,8 +1,6 @@
-import type { FrequencyInput } from '../Case'
-
 export interface ModuleInputs {
   nodeInputs?: Record<string, AudioNode>
-  frequencyInputs?: Record<string, FrequencyInput>
+  frequencyInputs?: Record<string, AudioNode>
 }
 export type InputsState = Record<string, ModuleInputs>
 

@@ -29,7 +29,7 @@ const Filter12db: React.FC = () => {
       inputs: {
         nodeInputs: { main: filterNode.current },
         frequencyInputs: {
-          frequency: (val) => setCurrentFrequency(val),
+          frequency: filterNode.current,
         },
       },
     })

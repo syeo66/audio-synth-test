@@ -9,6 +9,7 @@ interface RegisterModuleData {
   moduleName: string
   inputs: ModuleInputs
 }
+
 interface ContextData {
   audioCtx: AudioContext | null
   inputs: InputsState

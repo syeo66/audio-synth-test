@@ -31,13 +31,13 @@ const SingleOscillator: React.FC = () => {
 
     oscillator.current = audioCtx.createOscillator()
     oscillator.current.start()
-    oscillator.current.frequency.setValueAtTime(Math.random() * 100 + 100, audioCtx.currentTime)
+    oscillator.current.frequency.setValueAtTime(0, audioCtx.currentTime)
 
     registerModule({
       moduleName: 'oscillator',
       inputs: {
         frequencyInputs: {
-          frequency: (val) => setCurrentFrequency(val),
+          frequency: oscillator.current,
         },
       },
     })

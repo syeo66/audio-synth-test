@@ -1,10 +1,10 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
-import type { FrequencyInput } from '../../components/Case'
-import FrequencyOutputSelector from '../../components/FrequencyOutputSelector'
+import { CaseContext } from '../../components/Case'
 import Module from '../../components/Module'
 import ModuleFooter from '../../components/ModuleFooter'
+import NodeOutputSelector from '../../components/NodeOutputSelector'
 import PushButton from '../../components/PushButton'
 import Key from './Key'
 
@@ -39,15 +39,34 @@ const notes: Note[] = [
 ]
 
 const Keyboard: React.FC = () => {
+  const audioNode = useRef<ConstantSourceNode>()
+
+  const { audioCtx, registerModule } = useContext(CaseContext)
+
   const [octave, setOctave] = useState(0)
 
-  const frequencyOutput = useRef<FrequencyInput>()
+  useEffect(() => {
+    // initialize the gain module
+    if (!audioCtx) {
+      return
+    }
 
-  const handleChange = useCallback((e: FrequencyInput) => {
-    frequencyOutput.current = e
-  }, [])
+    audioNode.current = audioCtx.createConstantSource()
+    audioNode.current.offset.setValueAtTime(0, audioCtx.currentTime)
+    audioNode.current.start()
+  }, [audioCtx, registerModule])
 
-  const handleFreqChange = useCallback((f: number) => frequencyOutput.current?.(f), [])
+  const handleFreqChange = useCallback(
+    (f: number) => {
+      if (!audioCtx) {
+        return
+      }
+
+      audioNode.current?.offset.setValueAtTime(f, audioCtx.currentTime)
+    },
+    [audioCtx]
+  )
+
   const handleOctaveChange = useCallback((v: number) => setOctave(v), [])
 
   return (
@@ -69,6 +88,7 @@ const Keyboard: React.FC = () => {
           +2
         </PushButton>
       </div>
+
       <KeyboardWrapper>
         <KeysWrapper>
           {notes.map((note) => (
@@ -76,8 +96,9 @@ const Keyboard: React.FC = () => {
           ))}
         </KeysWrapper>
       </KeyboardWrapper>
+
       <ModuleFooter>
-        <FrequencyOutputSelector moduleName="keyboard" onChange={handleChange} />
+        <NodeOutputSelector moduleName="keyboard" audioNode={audioNode.current} type="frequency" />
       </ModuleFooter>
     </Module>
   )
