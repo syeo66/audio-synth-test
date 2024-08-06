@@ -98,21 +98,15 @@ const LFO: React.FC = () => {
       </ModuleSection>
 
       <ModuleSection>
-        <Knob
-          label="Freq."
-          min={0.1}
-          max={20}
-          step={1000.1}
-          value={currentFrequency}
-          onChange={handleFrequencyChange}
-        />
+        <Knob label="Freq." min={0.1} max={20} step={0.1} value={currentFrequency} onChange={handleFrequencyChange} />
       </ModuleSection>
+
       <ModuleSection>
-        <Knob label="Gain" min={0} max={100} step={0.01} value={currentGain} onChange={handleGainChange} />
+        <Knob label="Gain" min={0} max={10000} step={0.01} value={currentGain} onChange={handleGainChange} />
       </ModuleSection>
 
       <ModuleFooter>
-        <NodeOutputSelector audioNode={gainNode.current} moduleName="lfo" />
+        <NodeOutputSelector audioNode={gainNode.current} moduleName="lfo" type="frequency" />
       </ModuleFooter>
     </Module>
   )

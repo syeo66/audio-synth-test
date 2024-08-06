@@ -5,6 +5,7 @@ import Github from './components/Github'
 import Filter12db from './modules/Filter12db'
 import Gain from './modules/Gain'
 import Keyboard from './modules/Keyboard'
+import LFO from './modules/LFO'
 import SingleOscillator from './modules/SingleOscillator'
 
 const App: React.FC = () => {
@@ -14,6 +15,7 @@ const App: React.FC = () => {
       <Github />
       <Case>
         <Keyboard />
+        <LFO />
         <SingleOscillator />
         <Filter12db />
         <Gain />
