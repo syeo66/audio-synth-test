@@ -8,7 +8,7 @@ interface UseGainInput {
 }
 
 const useGain = ({ moduleName, inputName = 'main' }: UseGainInput) => {
-  const gainNode = useRef<GainNode>()
+  const gainNode = useRef<GainNode>(null)
 
   const [currentGain, setCurrentGain] = useState(0.5)
 

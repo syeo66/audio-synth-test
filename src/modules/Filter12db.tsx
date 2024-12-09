@@ -8,7 +8,7 @@ import ModuleSection from '../components/ModuleSection'
 import NodeOutputSelector from '../components/NodeOutputSelector'
 
 const Filter12db: React.FC = () => {
-  const filterNode = useRef<BiquadFilterNode>()
+  const filterNode = useRef<BiquadFilterNode>(null)
 
   const [currentFrequency, setCurrentFrequency] = useState(2000)
   const [currentQ, setCurrentQ] = useState(0)

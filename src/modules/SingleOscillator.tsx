@@ -18,7 +18,7 @@ const SingleOscillator: React.FC = () => {
   const [currentFrequency, setCurrentFrequency] = useState(440)
   const [detune, setDetune] = useState(0)
 
-  const oscillator = useRef<OscillatorNode>()
+  const oscillator = useRef<OscillatorNode>(null)
 
   const { audioCtx, registerModule } = useContext(CaseContext)
 

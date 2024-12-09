@@ -17,8 +17,8 @@ const LFO: React.FC = () => {
   const [currentFrequency, setCurrentFrequency] = useState(1)
   const [currentGain, setCurrentGain] = useState(1)
 
-  const oscillator = useRef<OscillatorNode>()
-  const gainNode = useRef<GainNode>()
+  const oscillator = useRef<OscillatorNode>(null)
+  const gainNode = useRef<GainNode>(null)
 
   const { audioCtx, registerModule } = useContext(CaseContext)
 

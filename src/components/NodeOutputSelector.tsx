@@ -13,7 +13,7 @@ const typeMapper: Record<Type, keyof ModuleInputs> = {
 }
 
 interface OutputSelectorProps {
-  audioNode: AudioNode | undefined
+  audioNode: AudioNode | undefined | null
   moduleName: string
   type?: Type
 }

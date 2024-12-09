@@ -39,7 +39,7 @@ const notes: Note[] = [
 ]
 
 const Keyboard: React.FC = () => {
-  const audioNode = useRef<ConstantSourceNode>()
+  const audioNode = useRef<ConstantSourceNode>(null)
 
   const { audioCtx, registerModule } = useContext(CaseContext)
 
