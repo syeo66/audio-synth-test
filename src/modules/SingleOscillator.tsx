@@ -80,21 +80,21 @@ const SingleOscillator: React.FC = () => {
   return (
     <Module title="SingleOscillator">
       <ModuleSection>
-        <PushButton onClick={handleSelectSine} active={oscillatorType === 'sine'}>
+        <PushButton onClick={handleSelectSine} $active={oscillatorType === 'sine'}>
           <Sine />
         </PushButton>
 
-        <PushButton onClick={handleSelectTriangle} active={oscillatorType === 'triangle'}>
+        <PushButton onClick={handleSelectTriangle} $active={oscillatorType === 'triangle'}>
           <Triangle />
         </PushButton>
       </ModuleSection>
 
       <ModuleSection>
-        <PushButton onClick={handleSelectSquare} active={oscillatorType === 'square'}>
+        <PushButton onClick={handleSelectSquare} $active={oscillatorType === 'square'}>
           <Square />
         </PushButton>
 
-        <PushButton onClick={handleSelectSawtooth} active={oscillatorType === 'sawtooth'}>
+        <PushButton onClick={handleSelectSawtooth} $active={oscillatorType === 'sawtooth'}>
           <Sawtooth />
         </PushButton>
       </ModuleSection>

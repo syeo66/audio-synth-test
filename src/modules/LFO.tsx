@@ -78,21 +78,21 @@ const LFO: React.FC = () => {
   return (
     <Module title="LFO">
       <ModuleSection>
-        <PushButton onClick={handleSelectSine} active={oscillatorType === 'sine'}>
+        <PushButton onClick={handleSelectSine} $active={oscillatorType === 'sine'}>
           <Sine />
         </PushButton>
 
-        <PushButton onClick={handleSelectTriangle} active={oscillatorType === 'triangle'}>
+        <PushButton onClick={handleSelectTriangle} $active={oscillatorType === 'triangle'}>
           <Triangle />
         </PushButton>
       </ModuleSection>
 
       <ModuleSection>
-        <PushButton onClick={handleSelectSquare} active={oscillatorType === 'square'}>
+        <PushButton onClick={handleSelectSquare} $active={oscillatorType === 'square'}>
           <Square />
         </PushButton>
 
-        <PushButton onClick={handleSelectSawtooth} active={oscillatorType === 'sawtooth'}>
+        <PushButton onClick={handleSelectSawtooth} $active={oscillatorType === 'sawtooth'}>
           <Sawtooth />
         </PushButton>
       </ModuleSection>
@@ -106,6 +106,7 @@ const LFO: React.FC = () => {
       </ModuleSection>
 
       <ModuleFooter>
+        {/* eslint-disable-next-line react-compiler/react-compiler */}
         <NodeOutputSelector audioNode={gainNode.current} moduleName="lfo" type="frequency" />
       </ModuleFooter>
     </Module>

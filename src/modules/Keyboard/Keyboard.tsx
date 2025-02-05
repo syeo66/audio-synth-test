@@ -72,19 +72,19 @@ const Keyboard: React.FC = () => {
   return (
     <Module title="Keyboard">
       <div>
-        <PushButton small onClick={() => handleOctaveChange(-2)} active={octave === -2}>
+        <PushButton $small onClick={() => handleOctaveChange(-2)} $active={octave === -2}>
           -2
         </PushButton>
-        <PushButton small onClick={() => handleOctaveChange(-1)} active={octave === -1}>
+        <PushButton $small onClick={() => handleOctaveChange(-1)} $active={octave === -1}>
           -1
         </PushButton>
-        <PushButton small onClick={() => handleOctaveChange(0)} active={octave === 0}>
+        <PushButton $small onClick={() => handleOctaveChange(0)} $active={octave === 0}>
           0
         </PushButton>
-        <PushButton small onClick={() => handleOctaveChange(1)} active={octave === 1}>
+        <PushButton $small onClick={() => handleOctaveChange(1)} $active={octave === 1}>
           +1
         </PushButton>
-        <PushButton small onClick={() => handleOctaveChange(2)} active={octave === 2}>
+        <PushButton $small onClick={() => handleOctaveChange(2)} $active={octave === 2}>
           +2
         </PushButton>
       </div>

@@ -12,7 +12,7 @@ module.exports = {
     ecmaVersion: 6,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'prettier', 'simple-import-sort'],
+  plugins: ['@typescript-eslint', 'prettier', 'simple-import-sort', 'eslint-plugin-react-compiler'],
   root: true,
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -31,5 +31,6 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'simple-import-sort/exports': 'error',
     'simple-import-sort/imports': 'error',
+    'react-compiler/react-compiler': 'error',
   },
 }
