@@ -14,9 +14,7 @@
   line-height: 24px;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: var(--text-color);
-  background-color: var(--background-color);
+  color-scheme: dark light;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -46,6 +44,8 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   justify-content: center;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 h1 {
